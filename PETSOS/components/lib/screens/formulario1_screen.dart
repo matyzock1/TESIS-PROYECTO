@@ -196,18 +196,22 @@ class _FormularioScreenState extends State<FormularioScreen> {
           ),
           if (isApretado && isApretado2 && isApretado3)
             ElevatedButton(
-              onPressed: () {
-                datosMascota.add(selecCurrency);
-                datosMascota.add(selecCurrency2);
-                datosMascota.add(selecCurrency3);
-                print(datosMascota);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SintomasScreen(a: datosMascota)));
-              },
-              child: const Text("SIGUIENTE"),
-            )
+                onPressed: () {
+                  datosMascota.add(selecCurrency);
+                  datosMascota.add(selecCurrency2);
+                  datosMascota.add(selecCurrency3);
+                  print(datosMascota);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SintomasScreen(a: datosMascota)));
+                },
+                child: const Text("SIGUIENTE"),
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 32, 115, 224),
+                  padding: EdgeInsets.all(20),
+                ))
           else
             ElevatedButton(
                 onPressed: () {
@@ -229,6 +233,7 @@ class _FormularioScreenState extends State<FormularioScreen> {
                 child: const Text('SIGUIENTE'),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,
+                  padding: EdgeInsets.all(20),
                 ))
         ],
       ),
