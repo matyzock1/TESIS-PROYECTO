@@ -44,10 +44,10 @@ class _FormularioScreenState extends State<FormularioScreen> {
             height: 60,
           ),
           const Text(
-            'Razas',
+            'Raza',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontWeight: FontWeight.w900),
+            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
           ),
           StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection('Razas').snapshots(),
@@ -92,13 +92,13 @@ class _FormularioScreenState extends State<FormularioScreen> {
             },
           ),
           const SizedBox(
-            height: 60,
+            height: 50,
           ),
           const Text(
             'Edad',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontWeight: FontWeight.w900),
+            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
           ),
           StreamBuilder(
             stream: FirebaseFirestore.instance.collection('Edad').snapshots(),
@@ -142,13 +142,13 @@ class _FormularioScreenState extends State<FormularioScreen> {
             },
           ),
           const SizedBox(
-            height: 60,
+            height: 50,
           ),
           const Text(
             'Peso',
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.end,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontWeight: FontWeight.w900),
+            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
           ),
           StreamBuilder(
             stream: FirebaseFirestore.instance.collection('Peso').snapshots(),
