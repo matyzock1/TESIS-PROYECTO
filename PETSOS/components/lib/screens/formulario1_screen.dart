@@ -209,8 +209,8 @@ class _FormularioScreenState extends State<FormularioScreen> {
                 },
                 child: const Text("SIGUIENTE"),
                 style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 32, 115, 224),
-                  padding: EdgeInsets.all(20),
+                  primary: const Color.fromARGB(255, 32, 115, 224),
+                  padding: const EdgeInsets.all(20),
                 ))
           else
             ElevatedButton(
