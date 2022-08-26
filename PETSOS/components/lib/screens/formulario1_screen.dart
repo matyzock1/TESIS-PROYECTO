@@ -192,7 +192,7 @@ class _FormularioScreenState extends State<FormularioScreen> {
             },
           ),
           const SizedBox(
-            height: 60,
+            height: 55,
           ),
           if (isApretado && isApretado2 && isApretado3)
             ElevatedButton(
