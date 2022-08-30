@@ -10,11 +10,9 @@ class AppRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
     'home': (BuildContext context) => const HomeScreen(),
     'gravedad': (BuildContext context) => const GravedadScreen(
-          b: [],
           datos: [],
         ),
     'gravedad2': (BuildContext context) => const Gravedad2Screen(
-          c: [],
           datos: [],
         ),
     'formulario1': (BuildContext context) => const FormularioScreen(),

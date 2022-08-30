@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:components/screens/gravedad2_screen.dart';
 import 'package:components/screens/screens.dart';
 import 'package:flutter/material.dart';
+import 'gravedad_screen.dart';
 
 class SintomasScreen extends StatefulWidget {
   final List a;
@@ -58,7 +59,6 @@ class _SintomasScreenState extends State<SintomasScreen> {
               a.clear();
               Navigator.of(context).pop();
               Navigator.of(context).pop();
-              print(a);
             },
             icon: const Icon(Icons.arrow_back),
           ),
@@ -306,234 +306,69 @@ class _SintomasScreenState extends State<SintomasScreen> {
           if (isApretado && isApretado2 && isApretado3)
             ElevatedButton(
               onPressed: () {
-                if (estado == 'grave' &&
-                    estado2 == 'grave' &&
-                    estado3 == 'grave') {
-                  String estadoFinal = 'Grave';
-                  a.add(selecCurrency);
-                  a.add(selecCurrency2);
-                  a.add(selecCurrency3);
-                  a.add(estadoFinal);
+                a.add(selecCurrency);
+                a.add(selecCurrency2);
+                a.add(selecCurrency3);
 
-                  for (var i = 0; i < nombresLista.length; i++) {
-                    paket.addAll({nombresLista[i]: a[i]});
+                cambiarVentana(result) {
+                  if (result == "Grave" || result == "grave") {
+                    a.add(result);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => GravedadScreen(
+                                  datos: a,
+                                )));
                   }
-                  hasil.add(paket);
-                  var collection =
-                      FirebaseFirestore.instance.collection('Atenciones');
-                  collection
-                      .add(paket)
-                      .then((_) => print('Added'))
-                      .catchError((error) => print('Add failed: $error'));
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => GravedadScreen(
-                                b: estadoGravedad,
-                                datos: a,
-                              )));
-                }
-                if (estado == 'leve' &&
-                    estado2 == 'leve' &&
-                    estado3 == 'leve') {
-                  String estadoFinal = 'Leve';
-                  a.add(selecCurrency);
-                  a.add(selecCurrency2);
-                  a.add(selecCurrency3);
-                  a.add(estadoFinal);
-
-                  for (var i = 0; i < nombresLista.length; i++) {
-                    paket.addAll({nombresLista[i]: a[i]});
+                  if (result == "Leve" || result == "leve") {
+                    a.add(result);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Gravedad2Screen(
+                                  datos: a,
+                                )));
                   }
-
-                  hasil.add(paket);
-
-                  var collection =
-                      FirebaseFirestore.instance.collection('Atenciones');
-                  collection
-                      .add(paket)
-                      .then((_) => print('Added'))
-                      .catchError((error) => print('Add failed: $error'));
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              Gravedad2Screen(c: estadoGravedad, datos: a)));
                 }
-                if (estado == 'grave' &&
-                    estado2 == 'leve' &&
-                    estado3 == 'leve') {
-                  String estadoFinal = 'Leve';
-                  a.add(selecCurrency);
-                  a.add(selecCurrency2);
-                  a.add(selecCurrency3);
-                  a.add(estadoFinal);
 
-                  for (var i = 0; i < nombresLista.length; i++) {
-                    paket.addAll({nombresLista[i]: a[i]});
+                limpiarData(comas) {
+                  for (var dato in comas) {
+                    if (dato.contains("estado")) {
+                      estado = dato;
+                      String result = estado.substring(8);
+                      cambiarVentana(result);
+                    }
                   }
-
-                  hasil.add(paket);
-
-                  var collection =
-                      FirebaseFirestore.instance.collection('Atenciones');
-                  collection
-                      .add(paket)
-                      .then((_) => print('Added'))
-                      .catchError((error) => print('Add failed: $error'));
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Gravedad2Screen(
-                                c: estadoGravedad,
-                                datos: a,
-                              )));
                 }
-                if (estado == 'grave' &&
-                    estado2 == 'grave' &&
-                    estado3 == 'leve') {
-                  String estadoFinal = 'Grave';
-                  a.add(selecCurrency);
-                  a.add(selecCurrency2);
-                  a.add(selecCurrency3);
-                  a.add(estadoFinal);
 
-                  for (var i = 0; i < nombresLista.length; i++) {
-                    paket.addAll({nombresLista[i]: a[i]});
+                Future getData() async {
+                  // Get docs from collection reference
+                  final enfermedad =
+                      FirebaseFirestore.instance.collection("Enfermedad");
+                  QuerySnapshot querySnapshot = await enfermedad
+                      .where("raza", isEqualTo: a[0])
+                      .where("edad", isEqualTo: a[1])
+                      .where("peso", isEqualTo: a[2])
+                      .where("sintoma1", whereIn: [a[3], a[4], a[5]]).get();
+
+                  var nombreEnfermedad =
+                      querySnapshot.docs.map((doc) => doc.data()).toString();
+
+                  if (nombreEnfermedad == "()") {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AlertScreen()));
+                  } else {
+                    var remover =
+                        nombreEnfermedad.replaceAll(RegExp('[{()}]'), '');
+                    final comas = remover.split(",").toList();
+
+                    limpiarData(comas);
                   }
-
-                  hasil.add(paket);
-
-                  var collection =
-                      FirebaseFirestore.instance.collection('Atenciones');
-                  collection
-                      .add(paket)
-                      .then((_) => print('Added'))
-                      .catchError((error) => print('Add failed: $error'));
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => GravedadScreen(
-                                b: estadoGravedad,
-                                datos: a,
-                              )));
                 }
-                if (estado == 'grave' &&
-                    estado2 == 'leve' &&
-                    estado3 == 'grave') {
-                  String estadoFinal = 'Grave';
-                  a.add(selecCurrency);
-                  a.add(selecCurrency2);
-                  a.add(selecCurrency3);
-                  a.add(estadoFinal);
 
-                  for (var i = 0; i < nombresLista.length; i++) {
-                    paket.addAll({nombresLista[i]: a[i]});
-                  }
-
-                  hasil.add(paket);
-
-                  var collection =
-                      FirebaseFirestore.instance.collection('Atenciones');
-                  collection
-                      .add(paket)
-                      .then((_) => print('Added'))
-                      .catchError((error) => print('Add failed: $error'));
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => GravedadScreen(
-                                b: estadoGravedad,
-                                datos: a,
-                              )));
-                }
-                if (estado == 'leve' &&
-                    estado2 == 'grave' &&
-                    estado3 == 'leve') {
-                  String estadoFinal = 'Leve';
-                  a.add(selecCurrency);
-                  a.add(selecCurrency2);
-                  a.add(selecCurrency3);
-                  a.add(estadoFinal);
-
-                  for (var i = 0; i < nombresLista.length; i++) {
-                    paket.addAll({nombresLista[i]: a[i]});
-                  }
-
-                  hasil.add(paket);
-
-                  var collection =
-                      FirebaseFirestore.instance.collection('Atenciones');
-                  collection
-                      .add(paket)
-                      .then((_) => print('Added'))
-                      .catchError((error) => print('Add failed: $error'));
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Gravedad2Screen(
-                                c: estadoGravedad,
-                                datos: a,
-                              )));
-                }
-                if (estado == 'leve' &&
-                    estado2 == 'grave' &&
-                    estado3 == 'grave') {
-                  String estadoFinal = 'Grave';
-                  a.add(selecCurrency);
-                  a.add(selecCurrency2);
-                  a.add(selecCurrency3);
-                  a.add(estadoFinal);
-
-                  for (var i = 0; i < nombresLista.length; i++) {
-                    paket.addAll({nombresLista[i]: a[i]});
-                  }
-
-                  hasil.add(paket);
-
-                  var collection =
-                      FirebaseFirestore.instance.collection('Atenciones');
-                  collection
-                      .add(paket)
-                      .then((_) => print('Added'))
-                      .catchError((error) => print('Add failed: $error'));
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => GravedadScreen(
-                                b: estadoGravedad,
-                                datos: a,
-                              )));
-                }
-                if (estado == 'leve' &&
-                    estado2 == 'leve' &&
-                    estado3 == 'grave') {
-                  String estadoFinal = 'Leve';
-                  a.add(selecCurrency);
-                  a.add(selecCurrency2);
-                  a.add(selecCurrency3);
-                  a.add(estadoFinal);
-
-                  for (var i = 0; i < nombresLista.length; i++) {
-                    paket.addAll({nombresLista[i]: a[i]});
-                  }
-
-                  hasil.add(paket);
-
-                  var collection =
-                      FirebaseFirestore.instance.collection('Atenciones');
-                  collection
-                      .add(paket)
-                      .then((_) => print('Added'))
-                      .catchError((error) => print('Add failed: $error'));
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Gravedad2Screen(
-                                c: estadoGravedad,
-                                datos: a,
-                              )));
-                }
+                getData();
               },
               child: const Text("CONSULTAR ESTADO"),
             )

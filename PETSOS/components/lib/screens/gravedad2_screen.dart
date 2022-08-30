@@ -4,8 +4,7 @@ import 'package:collection/collection.dart';
 
 class Gravedad2Screen extends StatefulWidget {
   final List datos;
-  const Gravedad2Screen({Key? key, required List c, required this.datos})
-      : super(key: key);
+  const Gravedad2Screen({Key? key, required this.datos}) : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
