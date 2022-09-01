@@ -47,18 +47,21 @@ class _HomePageState extends State<HomePage> {
       icon: BitmapDescriptor.defaultMarker,
       position: LatLng(-33.35783964645312, -70.67028139126742),
     );
+
     final Marker _kGooglePlexMarker2 = Marker(
       markerId: MarkerId("kGooglePlex"),
       infoWindow: InfoWindow(title: 'Clínica Veterinaria Huechuraba'),
       icon: BitmapDescriptor.defaultMarker,
       position: LatLng(-33.35225658429506, -70.67071054438819),
     );
+
     final Marker _kGooglePlexMarker3 = Marker(
       markerId: MarkerId("kGooglePlex"),
       infoWindow: InfoWindow(title: 'El Roble Veterinaria (Huechuraba)'),
       icon: BitmapDescriptor.defaultMarker,
       position: LatLng(-33.34705854795062, -70.66989515329783),
     );
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 0, 174, 255),
