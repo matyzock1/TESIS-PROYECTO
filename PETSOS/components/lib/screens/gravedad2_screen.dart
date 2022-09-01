@@ -4,8 +4,7 @@ import 'package:collection/collection.dart';
 
 class Gravedad2Screen extends StatefulWidget {
   final List datos;
-  const Gravedad2Screen({Key? key, required List c, required this.datos})
-      : super(key: key);
+  const Gravedad2Screen({Key? key, required this.datos}) : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
@@ -182,7 +181,7 @@ class _Gravedad2ScreenState extends State<Gravedad2Screen> {
           child: Column(
             children: [
               const SizedBox(
-                height: 150,
+                height: 100,
               ),
               IconButton(
                   icon: Image.asset('assets/warning.png'),
@@ -214,6 +213,18 @@ class _Gravedad2ScreenState extends State<Gravedad2Screen> {
                   style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(255, 251, 244, 21),
                   )),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'tips');
+                },
+                child: const Text(
+                  "           SIGUIENTE           ",
+                  style: TextStyle(color: Colors.black),
+                ),
+                style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(15),
+                    primary: const Color.fromARGB(255, 255, 255, 255)),
+              ),
             ],
           ),
         ),

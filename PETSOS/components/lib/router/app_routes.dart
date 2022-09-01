@@ -1,8 +1,10 @@
 import 'package:components/screens/clinicas.dart';
 import 'package:components/screens/googleMaps.dart';
 import 'package:components/screens/gravedad2_screen.dart';
+import 'package:components/screens/mapa.dart';
 import 'package:flutter/material.dart';
 import '../screens/screens.dart';
+import '../screens/tips.dart';
 
 class AppRoutes {
   static const initialRoute = 'home';
@@ -10,11 +12,9 @@ class AppRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
     'home': (BuildContext context) => const HomeScreen(),
     'gravedad': (BuildContext context) => const GravedadScreen(
-          b: [],
           datos: [],
         ),
     'gravedad2': (BuildContext context) => const Gravedad2Screen(
-          c: [],
           datos: [],
         ),
     'formulario1': (BuildContext context) => const FormularioScreen(),
@@ -22,8 +22,10 @@ class AppRoutes {
     'sintomas1': (BuildContext context) => const SintomasScreen(
           a: [],
         ),
-    'googlemaps': (BuildContext context) => const GoogleMapsScreen(),
+    'googlemaps': (BuildContext context) => GoogleMapsScreen(),
     'clinicas': (BuildContext context) => const ClinicasScreen(),
+    'tips': (BuildContext context) => const TipsScreen(),
+    'mapa': (BuildContext context) => const HomePage(),
   };
 
   static Route<dynamic> onGenerateRoute(settings) {
