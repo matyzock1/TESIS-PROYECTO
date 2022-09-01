@@ -11,16 +11,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
   // on below line we have specified camera position
-  static final CameraPosition _kGoogle = const CameraPosition(
+  static const CameraPosition _kGoogle = CameraPosition(
     target: LatLng(-33.45694, -70.64827),
     zoom: 14.4746,
   );
 
-  // on below line we have created the list of markers
   final List<Marker> _markers = <Marker>[
-    Marker(
+    const Marker(
         markerId: MarkerId('1'),
         position: LatLng(20.42796133580664, 75.885749655962),
         infoWindow: InfoWindow(
@@ -28,12 +27,12 @@ class _HomePageState extends State<HomePage> {
         )),
   ];
 
-  // created method for getting user current location
   Future<Position> getUserCurrentLocation() async {
     await Geolocator.requestPermission()
         .then((value) {})
         .onError((error, stackTrace) async {
       await Geolocator.requestPermission();
+      // ignore: avoid_print
       print("ERROR" + error.toString());
     });
     return await Geolocator.getCurrentPosition();
@@ -41,19 +40,19 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final Marker _kGooglePlexMarker = Marker(
+    const Marker _kGooglePlexMarker = Marker(
       markerId: MarkerId("kGooglePlex"),
       infoWindow: InfoWindow(title: 'Piedra Roja'),
       icon: BitmapDescriptor.defaultMarker,
       position: LatLng(-33.35783964645312, -70.67028139126742),
     );
-    final Marker _kGooglePlexMarker2 = Marker(
+    const Marker _kGooglePlexMarker2 = Marker(
       markerId: MarkerId("kGooglePlex"),
       infoWindow: InfoWindow(title: 'Clínica Veterinaria Huechuraba'),
       icon: BitmapDescriptor.defaultMarker,
       position: LatLng(-33.35225658429506, -70.67071054438819),
     );
-    final Marker _kGooglePlexMarker3 = Marker(
+    const Marker _kGooglePlexMarker3 = Marker(
       markerId: MarkerId("kGooglePlex"),
       infoWindow: InfoWindow(title: 'El Roble Veterinaria (Huechuraba)'),
       icon: BitmapDescriptor.defaultMarker,
@@ -63,32 +62,31 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 0, 174, 255),
         // on below line we have given title of app
-        title: Text(
+        title: const Text(
           "PET-SOS",
           style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
         ),
       ),
-      body: Container(
-        child: SafeArea(
-          child: GoogleMap(
-            initialCameraPosition: _kGoogle,
-            markers: {
-              _kGooglePlexMarker,
-              _kGooglePlexMarker2,
-              _kGooglePlexMarker3
-            },
-            mapType: MapType.normal,
-            myLocationEnabled: true,
-            compassEnabled: true,
-            onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
-            },
-          ),
+      body: SafeArea(
+        child: GoogleMap(
+          initialCameraPosition: _kGoogle,
+          markers: {
+            _kGooglePlexMarker,
+            _kGooglePlexMarker2,
+            _kGooglePlexMarker3
+          },
+          mapType: MapType.normal,
+          myLocationEnabled: true,
+          compassEnabled: true,
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           getUserCurrentLocation().then((value) async {
+            // ignore: avoid_print
             print(value.latitude.toString() + " " + value.longitude.toString());
             _markers.add(Marker(
               markerId: const MarkerId("2"),
@@ -99,7 +97,7 @@ class _HomePageState extends State<HomePage> {
             ));
 
             // specified current users location
-            CameraPosition cameraPosition = new CameraPosition(
+            CameraPosition cameraPosition = CameraPosition(
               target: LatLng(value.latitude, value.longitude),
               zoom: 15,
             );
