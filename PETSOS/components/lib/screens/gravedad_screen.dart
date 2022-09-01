@@ -4,8 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GravedadScreen extends StatefulWidget {
   final List datos;
-  const GravedadScreen({Key? key, required List b, required this.datos})
-      : super(key: key);
+  const GravedadScreen({Key? key, required this.datos}) : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
@@ -17,7 +16,6 @@ class _GravedadScreenState extends State<GravedadScreen> {
 
   List datos = [];
   List enfermedadActual = [];
-  
 
   _GravedadScreenState(this.datos);
   String nombreEnfermedad = "";
@@ -68,9 +66,6 @@ class _GravedadScreenState extends State<GravedadScreen> {
     nombreEnfermedad = querySnapshot.docs.map((doc) => doc.data()).toString();
     var remover = nombreEnfermedad.replaceAll(RegExp('[{()}]'), '');
     final comas = remover.split(",").toList();
-
-    print(comas);
-
     limpiarData(comas);
   }
 
@@ -236,7 +231,7 @@ class _GravedadScreenState extends State<GravedadScreen> {
                     style: TextStyle(color: Colors.black),
                   ),
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     primary: const Color.fromARGB(255, 251, 244, 21),
                   )),
               const SizedBox(
@@ -251,8 +246,8 @@ class _GravedadScreenState extends State<GravedadScreen> {
                   style: TextStyle(color: Colors.black),
                 ),
                 style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.all(15),
-                    primary: Color.fromARGB(255, 255, 255, 255)),
+                    padding: const EdgeInsets.all(15),
+                    primary: const Color.fromARGB(255, 255, 255, 255)),
               ),
               // ElevatedButton.icon(
               //     onPressed: () {},

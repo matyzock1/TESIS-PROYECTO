@@ -26,7 +26,7 @@ class ClinicasScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'googlemaps');
+                  Navigator.pushNamed(context, 'mapa');
                 },
                 child: const Text(
                   "  CLÍNICAS 24 HORAS  ",
