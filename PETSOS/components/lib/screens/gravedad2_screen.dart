@@ -181,7 +181,7 @@ class _Gravedad2ScreenState extends State<Gravedad2Screen> {
           child: Column(
             children: [
               const SizedBox(
-                height: 150,
+                height: 100,
               ),
               IconButton(
                   icon: Image.asset('assets/warning.png'),
@@ -213,6 +213,18 @@ class _Gravedad2ScreenState extends State<Gravedad2Screen> {
                   style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(255, 251, 244, 21),
                   )),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'tips');
+                },
+                child: const Text(
+                  "           SIGUIENTE           ",
+                  style: TextStyle(color: Colors.black),
+                ),
+                style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(15),
+                    primary: const Color.fromARGB(255, 255, 255, 255)),
+              ),
             ],
           ),
         ),
