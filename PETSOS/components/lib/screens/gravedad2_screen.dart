@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:components/screens/tips.dart';
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 
 import 'alert_screen.dart';
 
@@ -81,7 +80,6 @@ class _Gravedad2ScreenState extends State<Gravedad2Screen> {
         enfermedadDescription = e;
         String result = enfermedadDescription.substring(14);
         descripcionEnfermedad = result;
-        print(descripcionEnfermedad);
       }
     }
 
@@ -90,7 +88,6 @@ class _Gravedad2ScreenState extends State<Gravedad2Screen> {
         enfermedadDescription = e;
         String result = enfermedadDescription.substring(7);
         tips = result;
-        print(tips);
       }
     }
   }
@@ -139,7 +136,7 @@ class _Gravedad2ScreenState extends State<Gravedad2Screen> {
           iconTheme: const IconThemeData(
             color: Color.fromARGB(255, 255, 255, 255), //change your color here
           ),
-          backgroundColor: Color.fromARGB(255, 135, 6, 6),
+          backgroundColor: const Color.fromARGB(255, 135, 6, 6),
         ),
         body: Center(
           child: Column(
