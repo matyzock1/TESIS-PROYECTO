@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'alert_screen.dart';
+
 class GravedadScreen extends StatefulWidget {
   final List datos;
+
   const GravedadScreen({Key? key, required this.datos}) : super(key: key);
 
   @override
@@ -12,8 +15,6 @@ class GravedadScreen extends StatefulWidget {
 }
 
 class _GravedadScreenState extends State<GravedadScreen> {
-  final enfermedad = FirebaseFirestore.instance.collection("Enfermedad");
-
   List datos = [];
   List enfermedadActual = [];
 
@@ -31,45 +32,40 @@ class _GravedadScreenState extends State<GravedadScreen> {
   String descripcionEnfermedad = "";
   String datosAnimal = "";
   String result = "";
+  String algo = "";
 
-  //metodo que trae los sintomas en un Array.
+  Future dataClean() async {
+    final consulta = FirebaseFirestore.instance
+        .collection('Razas')
+        .doc(datos[0])
+        .collection(datos[2])
+        .doc(datos[1])
+        .collection('Enfermedad');
 
-  // Future getData2() async {
-  //   QuerySnapshot querySnapshot2 = await enfermedad
-  //       .where("raza", isEqualTo: datos[0])
-  //       .where("edad", isEqualTo: datos[1])
-  //       .where("peso", isEqualTo: datos[2])
-  //       .where("sintomas",
-  //           arrayContainsAny: [datos[3], datos[4], datos[5]]).get();
+    String sintoma1 = "sintomas" + '.' + datos[3];
+    String sintoma2 = "sintomas" + '.' + datos[4];
+    String sintoma3 = "sintomas" + '.' + datos[5];
 
-  //   final map = querySnapshot2 as Map<dynamic, dynamic>;
+    QuerySnapshot _consulta = await consulta
+        .where(sintoma1, isEqualTo: true)
+        .where(sintoma2, isEqualTo: true)
+        .where(sintoma3, isEqualTo: true)
+        .get();
 
-  //   print(map);
+    final val = _consulta.docs.map((doc) => doc.data()).toString();
 
-  //   var nombreEnfermedad2 =
-  //       querySnapshot2.docs.map((doc) => doc.data()).toString();
-  //   print(nombreEnfermedad2);
-  //   var remover = nombreEnfermedad2.replaceAll(RegExp('[{()}]'), '');
-  //   print(remover);
-  //   final comas = remover.split(",").toList();
-  //   print(comas);
-  // }
+    if (val == "()") {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const AlertScreen()));
+    } else {
+      var remover = val.replaceAll(RegExp('[{()}]'), '');
+      final comas = remover.split(",").toList();
 
-  Future getData() async {
-    // Get docs from collection reference
-    QuerySnapshot querySnapshot = await enfermedad
-        .where("raza", isEqualTo: datos[0])
-        .where("edad", isEqualTo: datos[1])
-        .where("peso", isEqualTo: datos[2])
-        .where("sintoma1", whereIn: [datos[3], datos[4], datos[5]]).get();
-
-    nombreEnfermedad = querySnapshot.docs.map((doc) => doc.data()).toString();
-    var remover = nombreEnfermedad.replaceAll(RegExp('[{()}]'), '');
-    final comas = remover.split(",").toList();
-    limpiarData(comas);
+      limpiarDatos(comas);
+    }
   }
 
-  limpiarData(comas) {
+  limpiarDatos(comas) {
     for (var e in comas) {
       if (e.contains("nombre")) {
         enfermedadName = e;
@@ -85,92 +81,28 @@ class _GravedadScreenState extends State<GravedadScreen> {
         descripcionEnfermedad = result;
       }
     }
-
-    for (var a in comas) {
-      if (a.contains("sintoma1")) {
-        sintoma1Enfermedad = a;
-        String result = sintoma1Enfermedad.substring(11);
-        enfermedadActual.add(result);
-      }
-    }
-    for (var a in comas) {
-      if (a.contains("sintoma2")) {
-        sintoma2Enfermedad = a;
-        String result = sintoma2Enfermedad.substring(11);
-        enfermedadActual.add(result);
-      }
-    }
-    for (var a in comas) {
-      if (a.contains("sintoma3")) {
-        sintoma3Enfermedad = a;
-        String result = sintoma3Enfermedad.substring(11);
-        enfermedadActual.add(result);
-      }
-    }
-    for (var a in comas) {
-      if (a.contains("raza")) {
-        razaEnfermedad = a;
-        String result = razaEnfermedad.substring(7);
-        enfermedadActual.add(result);
-      }
-    }
-    for (var a in comas) {
-      if (a.contains("peso")) {
-        pesoEnfermedad = a;
-        String result = pesoEnfermedad.substring(7);
-        enfermedadActual.add(result);
-      }
-    }
-    for (var a in comas) {
-      if (a.contains("edad")) {
-        edadEnfermedad = a;
-        String result = edadEnfermedad.substring(7);
-        enfermedadActual.add(result);
-      }
-    }
-    for (var a in comas) {
-      if (a.contains("estado")) {
-        estadoEnfermedad = a;
-        String result = estadoEnfermedad.substring(8);
-        enfermedadActual.add(result);
-      }
-    }
-    return enfermedadActual;
   }
 
   mostrarEnfermedad() {
-    Function unOrdDeepEq = const DeepCollectionEquality.unordered().equals;
-    if (unOrdDeepEq(datos, enfermedadActual) == true) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(
-                nombreEnfermedad,
-                style: const TextStyle(fontSize: 30),
-              ),
-              content: Text(
-                descripcionEnfermedad,
-                style: const TextStyle(fontStyle: FontStyle.italic),
-              ),
-            );
-          });
-    } else {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return const AlertDialog(
-              title: Text("Error!"),
-              content: Text("No se encontró enfermedad existente"),
-            );
-          });
-    }
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              nombreEnfermedad,
+              style: const TextStyle(fontSize: 30),
+            ),
+            content: Text(
+              descripcionEnfermedad,
+              style: const TextStyle(fontStyle: FontStyle.italic),
+            ),
+          );
+        });
   }
 
   @override
   void initState() {
-    getData();
-    // getData2();
+    dataClean();
     super.initState();
   }
 
@@ -178,7 +110,7 @@ class _GravedadScreenState extends State<GravedadScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 228, 70, 59),
+        backgroundColor: Color.fromARGB(255, 149, 20, 20),
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
@@ -190,12 +122,12 @@ class _GravedadScreenState extends State<GravedadScreen> {
           ),
           title: const Text(
             'PET-SOS PERRO',
-            style: TextStyle(color: Colors.black54),
+            style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
           ),
           iconTheme: const IconThemeData(
-            color: Colors.black, //change your color here
+            color: Color.fromARGB(255, 255, 255, 255), //change your color here
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: Color.fromARGB(255, 135, 6, 6),
         ),
         body: Center(
           child: Column(
@@ -210,7 +142,8 @@ class _GravedadScreenState extends State<GravedadScreen> {
               const Text.rich(
                 TextSpan(
                   text: 'Tu mascota posee un estado: ',
-                  style: TextStyle(fontSize: 20), // default text style
+                  style: TextStyle(
+                      fontSize: 20, color: Colors.white), // default text style
                   children: <TextSpan>[
                     TextSpan(
                         text: 'Grave.',
@@ -249,10 +182,6 @@ class _GravedadScreenState extends State<GravedadScreen> {
                     padding: const EdgeInsets.all(15),
                     primary: const Color.fromARGB(255, 255, 255, 255)),
               ),
-              // ElevatedButton.icon(
-              //     onPressed: () {},
-              //     icon: Icons.arrow_forward_ios_sharp,
-              //     label: Text("wea"))
             ],
           ),
         ),

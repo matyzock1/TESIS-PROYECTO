@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -11,16 +12,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
   // on below line we have specified camera position
-  static final CameraPosition _kGoogle = const CameraPosition(
+  static const CameraPosition _kGoogle = CameraPosition(
     target: LatLng(-33.45694, -70.64827),
     zoom: 14.4746,
   );
 
-  // on below line we have created the list of markers
   final List<Marker> _markers = <Marker>[
-    Marker(
+    const Marker(
         markerId: MarkerId('1'),
         position: LatLng(20.42796133580664, 75.885749655962),
         infoWindow: InfoWindow(
@@ -28,12 +28,12 @@ class _HomePageState extends State<HomePage> {
         )),
   ];
 
-  // created method for getting user current location
   Future<Position> getUserCurrentLocation() async {
     await Geolocator.requestPermission()
         .then((value) {})
         .onError((error, stackTrace) async {
       await Geolocator.requestPermission();
+      // ignore: avoid_print
       print("ERROR" + error.toString());
     });
     return await Geolocator.getCurrentPosition();
@@ -41,66 +41,58 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final Marker _kGooglePlexMarker = Marker(
-      markerId: MarkerId("kGooglePlex"),
-      infoWindow: InfoWindow(title: 'Piedra Roja'),
+    Marker _kGooglePlexMarker1 = Marker(
+      markerId: const MarkerId("marker1"),
+      infoWindow: InfoWindow(
+          title: 'Veterinaria Piedra Roja',
+          snippet: "Llamar: +56227250196",
+          onTap: () {
+            FlutterPhoneDirectCaller.callNumber('+56227250196');
+          }),
       icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(-33.35783964645312, -70.67028139126742),
+      position: const LatLng(-33.35783964645312, -70.67028139126742),
     );
-<<<<<<< HEAD
 
-=======
->>>>>>> d7baccd7fb4d3c2242dca026ef077c09ccb5db18
-    final Marker _kGooglePlexMarker2 = Marker(
-      markerId: MarkerId("kGooglePlex"),
-      infoWindow: InfoWindow(title: 'Clínica Veterinaria Huechuraba'),
+    Marker _kGooglePlexMarker2 = Marker(
+      markerId: const MarkerId("marker1"),
+      infoWindow: InfoWindow(
+          title: 'El Roble Veterinaria (Huechuraba)',
+          snippet: "Llamar: +56222488901",
+          onTap: () {
+            FlutterPhoneDirectCaller.callNumber('+56222488901');
+          }),
       icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(-33.35225658429506, -70.67071054438819),
+      position: const LatLng(-33.346709049302405, -70.66994884641845),
     );
-<<<<<<< HEAD
 
-=======
->>>>>>> d7baccd7fb4d3c2242dca026ef077c09ccb5db18
-    final Marker _kGooglePlexMarker3 = Marker(
-      markerId: MarkerId("kGooglePlex"),
-      infoWindow: InfoWindow(title: 'El Roble Veterinaria (Huechuraba)'),
-      icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(-33.34705854795062, -70.66989515329783),
-    );
-<<<<<<< HEAD
-
-=======
->>>>>>> d7baccd7fb4d3c2242dca026ef077c09ccb5db18
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 0, 174, 255),
+        backgroundColor: Color.fromARGB(255, 135, 6, 6),
         // on below line we have given title of app
-        title: Text(
+        title: const Text(
           "PET-SOS",
           style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
         ),
       ),
-      body: Container(
-        child: SafeArea(
-          child: GoogleMap(
-            initialCameraPosition: _kGoogle,
-            markers: {
-              _kGooglePlexMarker,
-              _kGooglePlexMarker2,
-              _kGooglePlexMarker3
-            },
-            mapType: MapType.normal,
-            myLocationEnabled: true,
-            compassEnabled: true,
-            onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
-            },
-          ),
+      body: SafeArea(
+        child: GoogleMap(
+          initialCameraPosition: _kGoogle,
+          markers: {
+            _kGooglePlexMarker1,
+            _kGooglePlexMarker2,
+          },
+          mapType: MapType.normal,
+          myLocationEnabled: true,
+          compassEnabled: true,
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           getUserCurrentLocation().then((value) async {
+            // ignore: avoid_print
             print(value.latitude.toString() + " " + value.longitude.toString());
             _markers.add(Marker(
               markerId: const MarkerId("2"),
@@ -111,7 +103,7 @@ class _HomePageState extends State<HomePage> {
             ));
 
             // specified current users location
-            CameraPosition cameraPosition = new CameraPosition(
+            CameraPosition cameraPosition = CameraPosition(
               target: LatLng(value.latitude, value.longitude),
               zoom: 15,
             );
@@ -124,7 +116,7 @@ class _HomePageState extends State<HomePage> {
         },
         label: const Text('Ubicación'),
         icon: const Icon(Icons.add_location_rounded),
-        backgroundColor: const Color.fromARGB(255, 0, 174, 255),
+        backgroundColor: const Color.fromARGB(255, 135, 6, 6),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
     );

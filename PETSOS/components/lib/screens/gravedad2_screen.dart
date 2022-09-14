@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:components/screens/tips.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+
+import 'alert_screen.dart';
 
 class Gravedad2Screen extends StatefulWidget {
   final List datos;
@@ -30,30 +33,46 @@ class _Gravedad2ScreenState extends State<Gravedad2Screen> {
   String descripcionEnfermedad = "";
   String datosAnimal = "";
   String result = "";
+  String tips = "";
 
-  Future getData() async {
-    // Get docs from collection reference
-    QuerySnapshot querySnapshot = await enfermedad
-        .where("raza", isEqualTo: datos[0])
-        .where("edad", isEqualTo: datos[1])
-        .where("peso", isEqualTo: datos[2])
-        .where("sintoma1", whereIn: [datos[3], datos[4], datos[5]]).get();
+  Future dataClean() async {
+    final consulta = FirebaseFirestore.instance
+        .collection('Razas')
+        .doc(datos[0])
+        .collection(datos[2])
+        .doc(datos[1])
+        .collection('Enfermedad');
 
-    nombreEnfermedad = querySnapshot.docs.map((doc) => doc.data()).toString();
-    var remover = nombreEnfermedad.replaceAll(RegExp('[{()}]'), '');
-    final comas = remover.split(",").toList();
+    String sintoma1 = "sintomas" + '.' + datos[3];
+    String sintoma2 = "sintomas" + '.' + datos[4];
+    String sintoma3 = "sintomas" + '.' + datos[5];
 
-    print(comas);
+    QuerySnapshot _consulta = await consulta
+        .where(sintoma1, isEqualTo: true)
+        .where(sintoma2, isEqualTo: true)
+        .where(sintoma3, isEqualTo: true)
+        .get();
 
-    limpiarData(comas);
+    final val = _consulta.docs.map((doc) => doc.data()).toString();
+
+    if (val == "()") {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const AlertScreen()));
+    } else {
+      var remover = val.replaceAll(RegExp('[{()}]'), '');
+      final comas = remover.split(",").toList();
+
+      limpiarDatos(comas);
+    }
   }
 
-  limpiarData(comas) {
+  limpiarDatos(comas) {
     for (var e in comas) {
       if (e.contains("nombre")) {
         enfermedadName = e;
         String result = enfermedadName.substring(9);
         nombreEnfermedad = result;
+        print(nombreEnfermedad);
       }
     }
 
@@ -66,91 +85,36 @@ class _Gravedad2ScreenState extends State<Gravedad2Screen> {
       }
     }
 
-    for (var a in comas) {
-      if (a.contains("sintoma1")) {
-        sintoma1Enfermedad = a;
-        String result = sintoma1Enfermedad.substring(11);
-        enfermedadActual.add(result);
+    for (var e in comas) {
+      if (e.contains("tips")) {
+        enfermedadDescription = e;
+        String result = enfermedadDescription.substring(7);
+        tips = result;
+        print(tips);
       }
     }
-    for (var a in comas) {
-      if (a.contains("sintoma2")) {
-        sintoma2Enfermedad = a;
-        String result = sintoma2Enfermedad.substring(11);
-        enfermedadActual.add(result);
-      }
-    }
-    for (var a in comas) {
-      if (a.contains("sintoma3")) {
-        sintoma3Enfermedad = a;
-        String result = sintoma3Enfermedad.substring(11);
-        enfermedadActual.add(result);
-      }
-    }
-    for (var a in comas) {
-      if (a.contains("raza")) {
-        razaEnfermedad = a;
-        String result = razaEnfermedad.substring(7);
-        enfermedadActual.add(result);
-      }
-    }
-    for (var a in comas) {
-      if (a.contains("peso")) {
-        pesoEnfermedad = a;
-        String result = pesoEnfermedad.substring(7);
-        enfermedadActual.add(result);
-      }
-    }
-    for (var a in comas) {
-      if (a.contains("edad")) {
-        edadEnfermedad = a;
-        String result = edadEnfermedad.substring(7);
-        enfermedadActual.add(result);
-      }
-    }
-    for (var a in comas) {
-      if (a.contains("estado")) {
-        estadoEnfermedad = a;
-        String result = estadoEnfermedad.substring(8);
-        enfermedadActual.add(result);
-      }
-    }
-    return enfermedadActual;
   }
 
   mostrarEnfermedad() {
-    Function unOrdDeepEq = const DeepCollectionEquality.unordered().equals;
-    if (unOrdDeepEq(datos, enfermedadActual) == true) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(
-                nombreEnfermedad,
-                style: const TextStyle(fontSize: 30),
-              ),
-              content: Text(
-                descripcionEnfermedad,
-                style: const TextStyle(fontStyle: FontStyle.italic),
-              ),
-            );
-          });
-    } else {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return const AlertDialog(
-              title: Text("Error!"),
-              content: Text("No se encontró enfermedad existente"),
-            );
-          });
-    }
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              nombreEnfermedad,
+              style: const TextStyle(fontSize: 30),
+            ),
+            content: Text(
+              descripcionEnfermedad,
+              style: const TextStyle(fontStyle: FontStyle.italic),
+            ),
+          );
+        });
   }
 
   @override
   void initState() {
-    getData();
-    // getData2();
+    dataClean();
     super.initState();
   }
 
@@ -170,12 +134,12 @@ class _Gravedad2ScreenState extends State<Gravedad2Screen> {
           ),
           title: const Text(
             'PET-SOS PERRO',
-            style: TextStyle(color: Colors.black54),
+            style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
           ),
           iconTheme: const IconThemeData(
-            color: Colors.black, //change your color here
+            color: Color.fromARGB(255, 255, 255, 255), //change your color here
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: Color.fromARGB(255, 135, 6, 6),
         ),
         body: Center(
           child: Column(
@@ -211,11 +175,20 @@ class _Gravedad2ScreenState extends State<Gravedad2Screen> {
                     style: TextStyle(color: Colors.black),
                   ),
                   style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(15),
                     primary: const Color.fromARGB(255, 251, 244, 21),
                   )),
+              const SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'tips');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TipsScreen(
+                                datos: tips,
+                              )));
                 },
                 child: const Text(
                   "           SIGUIENTE           ",
