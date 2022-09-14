@@ -24,7 +24,9 @@ class AppRoutes {
         ),
     'googlemaps': (BuildContext context) => GoogleMapsScreen(),
     'clinicas': (BuildContext context) => const ClinicasScreen(),
-    'tips': (BuildContext context) => const TipsScreen(),
+    'tips': (BuildContext context) => TipsScreen(
+          datos: String,
+        ),
     'mapa': (BuildContext context) => const HomePage(),
   };
 

@@ -8,21 +8,34 @@ class ClinicasScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'PET-SOS CLINICAS',
+          'PET-SOS SINTOMAS',
           style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
         ),
+        iconTheme: const IconThemeData(
+          color: Colors.white, //change your color here
+        ),
+        backgroundColor: Color.fromARGB(255, 135, 6, 6),
       ),
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(
-                    'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp4579424.jpg&f=1&nofb=https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp4579424.jpg&f=1&nofb=11'))),
+                    'https://wonderfulengineering.com/wp-content/uploads/2016/02/white-wallpaper-21-768x480.jpg'))),
         child: Center(
           child: Column(
             children: [
               const SizedBox(
-                height: 160,
+                height: 40,
+              ),
+              const Text(
+                'Selecciona el tipo de Atención',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
+              ),
+              const SizedBox(
+                height: 100,
               ),
               ElevatedButton(
                 onPressed: () {
@@ -34,7 +47,7 @@ class ClinicasScreen extends StatelessWidget {
                 ),
                 style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(30),
-                    primary: const Color.fromARGB(255, 255, 0, 0)),
+                    primary: Color.fromARGB(255, 135, 6, 6)),
               ),
               const SizedBox(
                 height: 70,
@@ -49,7 +62,7 @@ class ClinicasScreen extends StatelessWidget {
                 ),
                 style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(30),
-                    primary: const Color.fromARGB(255, 255, 238, 0)),
+                    primary: Color.fromARGB(255, 179, 169, 36)),
               ),
             ],
           ),
