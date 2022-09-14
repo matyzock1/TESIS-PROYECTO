@@ -32,6 +32,7 @@ class _GravedadScreenState extends State<GravedadScreen> {
   String descripcionEnfermedad = "";
   String datosAnimal = "";
   String result = "";
+  String algo = "";
 
   Future dataClean() async {
     final consulta = FirebaseFirestore.instance
