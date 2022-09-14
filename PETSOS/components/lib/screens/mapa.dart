@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -40,27 +41,33 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    const Marker _kGooglePlexMarker = Marker(
-      markerId: MarkerId("kGooglePlex"),
-      infoWindow: InfoWindow(title: 'Piedra Roja'),
+    Marker _kGooglePlexMarker1 = Marker(
+      markerId: const MarkerId("marker1"),
+      infoWindow: InfoWindow(
+          title: 'Veterinaria Piedra Roja',
+          snippet: "Llamar: +56227250196",
+          onTap: () {
+            FlutterPhoneDirectCaller.callNumber('+56227250196');
+          }),
       icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(-33.35783964645312, -70.67028139126742),
+      position: const LatLng(-33.35783964645312, -70.67028139126742),
     );
-    const Marker _kGooglePlexMarker2 = Marker(
-      markerId: MarkerId("kGooglePlex"),
-      infoWindow: InfoWindow(title: 'Clínica Veterinaria Huechuraba'),
+
+    Marker _kGooglePlexMarker2 = Marker(
+      markerId: const MarkerId("marker1"),
+      infoWindow: InfoWindow(
+          title: 'El Roble Veterinaria (Huechuraba)',
+          snippet: "Llamar: +56222488901",
+          onTap: () {
+            FlutterPhoneDirectCaller.callNumber('+56222488901');
+          }),
       icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(-33.35225658429506, -70.67071054438819),
+      position: const LatLng(-33.346709049302405, -70.66994884641845),
     );
-    const Marker _kGooglePlexMarker3 = Marker(
-      markerId: MarkerId("kGooglePlex"),
-      infoWindow: InfoWindow(title: 'El Roble Veterinaria (Huechuraba)'),
-      icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(-33.34705854795062, -70.66989515329783),
-    );
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 0, 174, 255),
+        backgroundColor: Color.fromARGB(255, 135, 6, 6),
         // on below line we have given title of app
         title: const Text(
           "PET-SOS",
@@ -71,9 +78,8 @@ class _HomePageState extends State<HomePage> {
         child: GoogleMap(
           initialCameraPosition: _kGoogle,
           markers: {
-            _kGooglePlexMarker,
+            _kGooglePlexMarker1,
             _kGooglePlexMarker2,
-            _kGooglePlexMarker3
           },
           mapType: MapType.normal,
           myLocationEnabled: true,
@@ -110,7 +116,7 @@ class _HomePageState extends State<HomePage> {
         },
         label: const Text('Ubicación'),
         icon: const Icon(Icons.add_location_rounded),
-        backgroundColor: const Color.fromARGB(255, 0, 174, 255),
+        backgroundColor: const Color.fromARGB(255, 135, 6, 6),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
     );

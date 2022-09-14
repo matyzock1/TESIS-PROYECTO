@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocode/geocode.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -10,106 +11,143 @@ Completer<GoogleMapController> _controller = Completer();
 class GoogleMapsScreen extends StatefulWidget {
   GoogleMapsScreen({Key? key}) : super(key: key);
 
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(-33.356662, -70.670688),
-    zoom: 14.4746,
-  );
-
   @override
   State<GoogleMapsScreen> createState() => _GoogleMapsScreenState();
 }
 
 class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
-  // Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  final Completer<GoogleMapController> _controller = Completer();
+  // on below line we have specified camera position
+  static const CameraPosition _kGoogle = CameraPosition(
+    target: LatLng(-33.45694, -70.64827),
+    zoom: 14.4746,
+  );
 
-  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  final List<Marker> _markers = <Marker>[
+    const Marker(
+        markerId: MarkerId('1'),
+        position: LatLng(20.42796133580664, 75.885749655962),
+        infoWindow: InfoWindow(
+          title: 'My Position',
+        )),
+  ];
 
-  // late Position position;
+  Future<Position> getUserCurrentLocation() async {
+    await Geolocator.requestPermission()
+        .then((value) {})
+        .onError((error, stackTrace) async {
+      await Geolocator.requestPermission();
+      // ignore: avoid_print
+      print("ERROR" + error.toString());
+    });
+    return await Geolocator.getCurrentPosition();
+  }
 
-  // void getMarkers(double lat, double long) {
-  //   MarkerId markerId = MarkerId(lat.toString() + long.toString());
-  //   Marker _marker = Marker(
-  //       markerId: markerId,
-  //       position: LatLng(lat, long),
-  //       icon: BitmapDescriptor.defaultMarker,
-  //       infoWindow: InfoWindow(snippet: 'Address'));
-  //   setState(() {
-  //     markers[markerId] = _marker;
-  //   });
-  // }
-
-  // void getCurrentLocation() async {
-  //   Position currentPosition =
-  //       await GeolocatorPlatform.instance.getCurrentPosition();
-  //   setState(() {
-  //     position = currentPosition;
-  //   });
-  // }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getCurrentLocation();
-  // }
-
-  // var currentLocation;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Geolocator.getCurrentPosition().then((curreloc) {
-  //     setState(() {
-  //       currentLocation = curreloc;
-  //     });
-  //   });
-  // }
-
+  @override
   Widget build(BuildContext context) {
-    final Marker _kGooglePlexMarker = Marker(
-      markerId: MarkerId("kGooglePlex"),
-      infoWindow: InfoWindow(title: 'Piedra Roja'),
-      icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(-33.35783964645312, -70.67028139126742),
-    );
-    return WillPopScope(
-      child: Scaffold(
-        body: GoogleMap(
-            // onTap: (tapped) async {
-            //   var coordinated = geoco.Coordinates();
-            //   getMarkers(tapped.latitude, tapped.longitude);
-            //   await FirebaseFirestore.instance.collection('location').add({
-            //     'latitude': tapped.latitude,
-            //     'longitude': tapped.longitude,
-            //     'Address': tapped
-            //   });
-            // },
-            mapType: MapType.normal,
-            markers: {_kGooglePlexMarker},
-            initialCameraPosition: GoogleMapsScreen._kGooglePlex,
-            onMapCreated: (GoogleMapController controller) {
-              if (!_controller.isCompleted) {
-                //first calling is false
-                //call "completer()"
-                _controller.complete(controller);
-              } else {
-                //other calling, later is true,
-                //don't call again completer()
-              }
+    Marker _kGooglePlexMarker1 = Marker(
+        markerId: const MarkerId("marker1"),
+        infoWindow: InfoWindow(
+            title: 'Clínica Veterinaria Huechuraba',
+            snippet: "Llamar: +56227210922",
+            onTap: () {
+              FlutterPhoneDirectCaller.callNumber('+56227210922');
             }),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          label: const Text('Volver'),
-          icon: const Icon(Icons.arrow_back),
-          backgroundColor: const Color.fromARGB(222, 211, 43, 2),
+        icon: BitmapDescriptor.defaultMarker,
+        position: const LatLng(-33.35225658429506, -70.67071054438819));
+
+    Marker _kGooglePlexMarker2 = Marker(
+      markerId: const MarkerId("marker2"),
+      infoWindow: InfoWindow(
+          title: 'Clínica Veterinaria Everest',
+          snippet: "Llamar: +56232292114",
+          onTap: () {
+            FlutterPhoneDirectCaller.callNumber('+56232292114');
+          }),
+      icon: BitmapDescriptor.defaultMarker,
+      position: LatLng(-33.3533768456075, -70.67655780885231),
+    );
+
+    Marker _kGooglePlexMarker3 = Marker(
+      markerId: const MarkerId("marker3"),
+      infoWindow: InfoWindow(
+          title: 'Veterinaria Dr. House Vet',
+          snippet: "Llamar: +56227211534",
+          onTap: () {
+            FlutterPhoneDirectCaller.callNumber('+56227211534');
+          }),
+      icon: BitmapDescriptor.defaultMarker,
+      position: LatLng(-33.3533768456075, -70.67655780885231),
+    );
+
+    Marker _kGooglePlexMarker4 = Marker(
+      markerId: const MarkerId("marker4"),
+      infoWindow: InfoWindow(
+          title: 'Clínica Veterinaria Boticaria Animal',
+          snippet: "+56232092949",
+          onTap: () {
+            FlutterPhoneDirectCaller.callNumber('+56232092949');
+          }),
+      icon: BitmapDescriptor.defaultMarker,
+      position: LatLng(-33.354954099084964, -70.67157962938873),
+    );
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 135, 6, 6),
+        // on below line we have given title of app
+        title: const Text(
+          "PET-SOS",
+          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
         ),
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.miniStartFloat,
       ),
-      onWillPop: () async {
-        return false;
-      },
+      body: SafeArea(
+        child: GoogleMap(
+          initialCameraPosition: _kGoogle,
+          markers: {
+            _kGooglePlexMarker1,
+            _kGooglePlexMarker2,
+            _kGooglePlexMarker3,
+            _kGooglePlexMarker4
+          },
+          mapType: MapType.normal,
+          myLocationEnabled: true,
+          compassEnabled: true,
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          getUserCurrentLocation().then((value) async {
+            // ignore: avoid_print
+            print(value.latitude.toString() + " " + value.longitude.toString());
+            _markers.add(Marker(
+              markerId: const MarkerId("2"),
+              position: LatLng(value.latitude, value.longitude),
+              infoWindow: const InfoWindow(
+                title: 'My Current Location',
+              ),
+            ));
+
+            // specified current users location
+            CameraPosition cameraPosition = CameraPosition(
+              target: LatLng(value.latitude, value.longitude),
+              zoom: 15,
+            );
+
+            final GoogleMapController controller = await _controller.future;
+            controller
+                .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+            setState(() {});
+          });
+        },
+        label: const Text('Ubicación'),
+        icon: const Icon(Icons.add_location_rounded),
+        backgroundColor: const Color.fromARGB(255, 135, 6, 6),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
     );
   }
 }

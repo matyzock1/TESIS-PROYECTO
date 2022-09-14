@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:components/screens/gravedad2_screen.dart';
 import 'package:components/screens/screens.dart';
@@ -320,7 +319,6 @@ class _SintomasScreenState extends State<SintomasScreen> {
                       a.add(selecCurrency);
                       a.add(selecCurrency2);
                       a.add(selecCurrency3);
-
                       cambiarVentana(result) {
                         if (result == "Grave" || result == "grave") {
                           a.add(result);
@@ -352,36 +350,44 @@ class _SintomasScreenState extends State<SintomasScreen> {
                         }
                       }
 
-                      Future getData() async {
-                        // Get docs from collection reference
-                        final enfermedad =
-                            FirebaseFirestore.instance.collection("Enfermedad");
-                        QuerySnapshot querySnapshot = await enfermedad
-                            .where("raza", isEqualTo: a[0])
-                            .where("edad", isEqualTo: a[1])
-                            .where("peso", isEqualTo: a[2])
-                            .where("sintoma1",
-                                whereIn: [a[3], a[4], a[5]]).get();
+                      Future dataClean() async {
+                        final consulta = FirebaseFirestore.instance
+                            .collection('Razas')
+                            .doc(a[0])
+                            .collection(a[2])
+                            .doc(a[1])
+                            .collection('Enfermedad');
 
-                        var nombreEnfermedad = querySnapshot.docs
-                            .map((doc) => doc.data())
-                            .toString();
+                        String sintoma1 = "sintomas" + '.' + a[3];
+                        String sintoma2 = "sintomas" + '.' + a[4];
+                        String sintoma3 = "sintomas" + '.' + a[5];
 
-                        if (nombreEnfermedad == "()") {
+                        QuerySnapshot _consulta = await consulta
+                            .where(sintoma1, isEqualTo: true)
+                            .where(sintoma2, isEqualTo: true)
+                            .where(sintoma3, isEqualTo: true)
+                            .get();
+
+                        final val =
+                            _consulta.docs.map((doc) => doc.data()).toString();
+
+                        if (val == "()") {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const AlertScreen()));
                         } else {
-                          var remover =
-                              nombreEnfermedad.replaceAll(RegExp('[{()}]'), '');
+                          var remover = val.replaceAll(RegExp('[{()}]'), '');
                           final comas = remover.split(",").toList();
 
                           limpiarData(comas);
                         }
+
+                        print(val);
                       }
 
-                      getData();
+                      // getData();
+                      dataClean();
                     },
                     child: const Text("CONSULTAR ESTADO"),
                     style: ElevatedButton.styleFrom(
