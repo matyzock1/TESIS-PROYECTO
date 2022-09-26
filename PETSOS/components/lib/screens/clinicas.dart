@@ -14,7 +14,7 @@ class ClinicasScreen extends StatelessWidget {
         iconTheme: const IconThemeData(
           color: Colors.white, //change your color here
         ),
-        backgroundColor: Color.fromARGB(255, 135, 6, 6),
+        backgroundColor: const Color.fromARGB(255, 135, 6, 6),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -47,7 +47,7 @@ class ClinicasScreen extends StatelessWidget {
                 ),
                 style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(30),
-                    primary: Color.fromARGB(255, 135, 6, 6)),
+                    primary: const Color.fromARGB(255, 135, 6, 6)),
               ),
               const SizedBox(
                 height: 70,
@@ -62,7 +62,7 @@ class ClinicasScreen extends StatelessWidget {
                 ),
                 style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(30),
-                    primary: Color.fromARGB(255, 179, 169, 36)),
+                    primary: const Color.fromARGB(255, 179, 169, 36)),
               ),
             ],
           ),
