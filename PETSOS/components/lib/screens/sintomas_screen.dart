@@ -1,11 +1,9 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:components/screens/gravedad2_screen.dart';
 import 'package:components/screens/screens.dart';
 import 'package:flutter/material.dart';
-import 'gravedad_screen.dart';
 
 class SintomasScreen extends StatefulWidget {
   final List a;
@@ -319,6 +317,7 @@ class _SintomasScreenState extends State<SintomasScreen> {
                       a.add(selecCurrency);
                       a.add(selecCurrency2);
                       a.add(selecCurrency3);
+
                       cambiarVentana(result) {
                         if (result == "Grave" || result == "grave") {
                           a.add(result);
@@ -382,16 +381,13 @@ class _SintomasScreenState extends State<SintomasScreen> {
 
                           limpiarData(comas);
                         }
-
-                        print(val);
                       }
 
-                      // getData();
                       dataClean();
                     },
                     child: const Text("CONSULTAR ESTADO"),
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 31, 163, 59),
+                      primary: const Color.fromARGB(255, 31, 163, 59),
                     ))
               else
                 ElevatedButton(
@@ -413,7 +409,7 @@ class _SintomasScreenState extends State<SintomasScreen> {
                     },
                     child: const Text('CONSULTAR ESTADO'),
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 135, 6, 6),
+                      primary: const Color.fromARGB(255, 135, 6, 6),
                     ))
             ]),
           ),

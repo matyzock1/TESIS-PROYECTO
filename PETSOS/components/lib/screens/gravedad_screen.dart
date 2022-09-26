@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'alert_screen.dart';
@@ -32,7 +31,6 @@ class _GravedadScreenState extends State<GravedadScreen> {
   String descripcionEnfermedad = "";
   String datosAnimal = "";
   String result = "";
-  String algo = "";
 
   Future dataClean() async {
     final consulta = FirebaseFirestore.instance
