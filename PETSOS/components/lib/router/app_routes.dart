@@ -3,6 +3,7 @@ import 'package:components/screens/googleMaps.dart';
 import 'package:components/screens/gravedad2_screen.dart';
 import 'package:components/screens/mapa.dart';
 import 'package:flutter/material.dart';
+import '../screens/login.dart';
 import '../screens/screens.dart';
 import '../screens/tips.dart';
 
@@ -28,6 +29,7 @@ class AppRoutes {
           datos: String,
         ),
     'mapa': (BuildContext context) => const HomePage(),
+    'login': (BuildContext context) => const Home2Screen(),
   };
 
   static Route<dynamic> onGenerateRoute(settings) {

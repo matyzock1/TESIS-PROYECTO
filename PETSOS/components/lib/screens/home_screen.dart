@@ -42,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                 icon: Image.asset('assets/gato.png'),
                 iconSize: 100,
                 onPressed: () {
-                  Navigator.pushNamed(context, 'formulario2');
+                  Navigator.pushNamed(context, 'login');
                 },
               ),
             ],
