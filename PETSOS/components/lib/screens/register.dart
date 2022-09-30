@@ -2,14 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-class Home2Screen extends StatefulWidget {
-  const Home2Screen({Key? key}) : super(key: key);
+class Home4Screen extends StatefulWidget {
+  const Home4Screen({Key? key}) : super(key: key);
 
   @override
-  State<Home2Screen> createState() => _Home2ScreenState();
+  State<Home4Screen> createState() => _Home4ScreenState();
 }
 
-class _Home2ScreenState extends State<Home2Screen> {
+class _Home4ScreenState extends State<Home4Screen> {
   Future<FirebaseApp> _initlizeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     return firebaseApp;
@@ -61,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _nombreController = TextEditingController();
     TextEditingController _emailController = TextEditingController();
     TextEditingController _passwordController = TextEditingController();
     return Padding(
@@ -77,14 +78,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontWeight: FontWeight.bold),
           ),
           const Text(
-            "Iniciar sesion",
+            "Registrarme",
             style: TextStyle(
                 color: Colors.black,
-                fontSize: 33.0,
+                fontSize: 44.0,
                 fontWeight: FontWeight.bold),
           ),
           const SizedBox(
-            height: 25.0,
+            height: 10.0,
+          ),
+          TextField(
+            controller: _nombreController,
+            keyboardType: TextInputType.name,
+            decoration: const InputDecoration(
+                hintText: "Ingresa tu Nombre",
+                prefixIcon: Icon(Icons.face_outlined, color: Colors.black)),
+          ),
+          const SizedBox(
+            height: 26.0,
           ),
           TextField(
             controller: _emailController,
@@ -107,46 +118,8 @@ class _LoginScreenState extends State<LoginScreen> {
           const SizedBox(
             height: 12.0,
           ),
-          TextButton(
-            child: const Text(
-              "Olvidaste tu contraseña?",
-              style: TextStyle(
-                color: Color.fromARGB(255, 201, 40, 12),
-              ),
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, 'pass');
-            },
-          ),
           const SizedBox(
-            height: 20.0,
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: RawMaterialButton(
-                fillColor: Color.fromARGB(255, 201, 40, 12),
-                elevation: 0.0,
-                padding: const EdgeInsets.symmetric(vertical: 15.0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                onPressed: () async {
-                  User? user = await loginUsingEmailPassword(
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                      context: context);
-                  print(user);
-                  if (user != null) {
-                    // ignore: use_build_context_synchronously
-                    Navigator.pushNamed(context, 'home');
-                  }
-                },
-                child: const Text(
-                  "Iniciar Sesion",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                )),
-          ),
-          const SizedBox(
-            height: 10.0,
+            height: 22.0,
           ),
           SizedBox(
             width: double.infinity,
@@ -157,10 +130,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0)),
                 onPressed: () {
-                  Navigator.pushNamed(context, 'register');
+                  FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                          email: _emailController.text,
+                          password: _passwordController.text)
+                      .then((value) => Navigator.pushNamed(context, 'login'));
                 },
                 child: const Text(
-                  "Registrarse",
+                  "Registrarme",
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 )),
           )

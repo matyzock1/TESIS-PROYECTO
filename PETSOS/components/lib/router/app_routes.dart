@@ -5,6 +5,7 @@ import 'package:components/screens/mapa.dart';
 import 'package:flutter/material.dart';
 import '../screens/login.dart';
 import '../screens/password.dart';
+import '../screens/register.dart';
 import '../screens/screens.dart';
 import '../screens/tips.dart';
 
@@ -32,6 +33,7 @@ class AppRoutes {
     'mapa': (BuildContext context) => const HomePage(),
     'login': (BuildContext context) => const Home2Screen(),
     'pass': (BuildContext context) => const Home3Screen(),
+    'register': (BuildContext context) => const Home4Screen(),
   };
 
   static Route<dynamic> onGenerateRoute(settings) {
