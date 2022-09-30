@@ -4,11 +4,12 @@ import 'package:components/screens/gravedad2_screen.dart';
 import 'package:components/screens/mapa.dart';
 import 'package:flutter/material.dart';
 import '../screens/login.dart';
+import '../screens/password.dart';
 import '../screens/screens.dart';
 import '../screens/tips.dart';
 
 class AppRoutes {
-  static const initialRoute = 'home';
+  static const initialRoute = 'login';
 
   static Map<String, Widget Function(BuildContext)> routes = {
     'home': (BuildContext context) => const HomeScreen(),
@@ -30,6 +31,7 @@ class AppRoutes {
         ),
     'mapa': (BuildContext context) => const HomePage(),
     'login': (BuildContext context) => const Home2Screen(),
+    'pass': (BuildContext context) => const Home3Screen(),
   };
 
   static Route<dynamic> onGenerateRoute(settings) {

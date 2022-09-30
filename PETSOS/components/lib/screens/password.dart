@@ -2,14 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-class Home2Screen extends StatefulWidget {
-  const Home2Screen({Key? key}) : super(key: key);
+class Home3Screen extends StatefulWidget {
+  const Home3Screen({Key? key}) : super(key: key);
 
   @override
-  State<Home2Screen> createState() => _Home2ScreenState();
+  State<Home3Screen> createState() => _Home3ScreenState();
 }
 
-class _Home2ScreenState extends State<Home2Screen> {
+class _Home3ScreenState extends State<Home3Screen> {
   Future<FirebaseApp> _initlizeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     return firebaseApp;
@@ -22,7 +22,7 @@ class _Home2ScreenState extends State<Home2Screen> {
         future: _initlizeFirebase(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return const LoginScreen();
+            return const PassScreen();
           }
           return const Center(
             child: CircularProgressIndicator(),
@@ -33,14 +33,14 @@ class _Home2ScreenState extends State<Home2Screen> {
   }
 }
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class PassScreen extends StatefulWidget {
+  const PassScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<PassScreen> createState() => _PassScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _PassScreenState extends State<PassScreen> {
   static Future<User?> loginUsingEmailPassword(
       {required String email,
       required String password,
@@ -77,10 +77,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontWeight: FontWeight.bold),
           ),
           const Text(
-            "Iniciar sesion",
+            "Recuperar Contraseña",
             style: TextStyle(
                 color: Colors.black,
-                fontSize: 44.0,
+                fontSize: 33.0,
                 fontWeight: FontWeight.bold),
           ),
           const SizedBox(
@@ -94,32 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 prefixIcon: Icon(Icons.mail, color: Colors.black)),
           ),
           const SizedBox(
-            height: 26.0,
-          ),
-          TextField(
-            controller: _passwordController,
-            keyboardType: TextInputType.emailAddress,
-            obscureText: true,
-            decoration: const InputDecoration(
-                hintText: "Ingresa tu Contraseña",
-                prefixIcon: Icon(Icons.lock, color: Colors.black)),
-          ),
-          const SizedBox(
-            height: 12.0,
-          ),
-          TextButton(
-            child: const Text(
-              "Olvidaste tu contraseña?",
-              style: TextStyle(
-                color: Color.fromARGB(255, 201, 40, 12),
-              ),
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, 'pass');
-            },
-          ),
-          const SizedBox(
-            height: 20.0,
+            height: 44.0,
           ),
           SizedBox(
             width: double.infinity,
@@ -129,19 +104,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0)),
-                onPressed: () async {
-                  User? user = await loginUsingEmailPassword(
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                      context: context);
-                  print(user);
-                  if (user != null) {
-                    // ignore: use_build_context_synchronously
-                    Navigator.pushNamed(context, 'home');
-                  }
+                onPressed: () {
+                  FirebaseAuth.instance
+                      .sendPasswordResetEmail(email: _emailController.text)
+                      .then((value) => Navigator.pushNamed(context, 'login'));
                 },
                 child: const Text(
-                  "Iniciar Sesion",
+                  "Restablecer Contraseña",
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 )),
           )
