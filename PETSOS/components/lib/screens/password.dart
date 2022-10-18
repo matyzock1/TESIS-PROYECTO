@@ -99,12 +99,21 @@ class _PassScreenState extends State<PassScreen> {
           SizedBox(
             width: double.infinity,
             child: RawMaterialButton(
-                fillColor: Color.fromARGB(255, 201, 40, 12),
+                fillColor: const Color.fromARGB(255, 201, 40, 12),
                 elevation: 0.0,
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0)),
                 onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const AlertDialog(
+                            title: Text(
+                          "Correo enviado éxitosamente.",
+                          style: TextStyle(fontSize: 20),
+                        ));
+                      });
                   FirebaseAuth.instance
                       .sendPasswordResetEmail(email: _emailController.text)
                       .then((value) => Navigator.pushNamed(context, 'login'));

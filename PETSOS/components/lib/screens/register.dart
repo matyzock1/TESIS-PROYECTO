@@ -41,24 +41,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  static Future<User?> loginUsingEmailPassword(
-      {required String email,
-      required String password,
-      required BuildContext context}) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
-    try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      user = userCredential.user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found") {
-        print("No existe un usuario con este Email");
-      }
-    }
-    return user;
-  }
-
   @override
   Widget build(BuildContext context) {
     TextEditingController _nombreController = TextEditingController();
@@ -124,17 +106,24 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             width: double.infinity,
             child: RawMaterialButton(
-                fillColor: Color.fromARGB(255, 201, 40, 12),
+                fillColor: const Color.fromARGB(255, 201, 40, 12),
                 elevation: 0.0,
                 padding: const EdgeInsets.symmetric(vertical: 15.0),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0)),
                 onPressed: () {
-                  FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                          email: _emailController.text,
-                          password: _passwordController.text)
-                      .then((value) => Navigator.pushNamed(context, 'login'));
+                  FirebaseAuth.instance.createUserWithEmailAndPassword(
+                      email: _emailController.text,
+                      password: _passwordController.text);
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const AlertDialog(
+                            title: Text(
+                          "Usuario registrado exitosamente",
+                          style: TextStyle(fontSize: 20),
+                        ));
+                      }).then((value) => Navigator.pushNamed(context, 'login'));
                 },
                 child: const Text(
                   "Registrarme",

@@ -29,6 +29,9 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              const SizedBox(
+                height: 200,
+              ),
               IconButton(
                   icon: Image.asset('assets/perro.png'),
                   iconSize: 100,
@@ -38,13 +41,18 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 60,
               ),
-              IconButton(
-                icon: Image.asset('assets/gato.png'),
-                iconSize: 100,
-                onPressed: () {
-                  Navigator.pushNamed(context, '');
-                },
+              const SizedBox(
+                height: 179,
               ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("CERRA SESION"),
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color.fromARGB(255, 31, 163, 59),
+                    padding: const EdgeInsets.all(15),
+                  )),
             ],
           ),
         ));
