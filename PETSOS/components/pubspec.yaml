@@ -45,6 +45,8 @@ dependencies:
   flutter_phone_direct_caller: ^2.1.0
   firebase_auth: ^3.6.4
   firebase_auth_platform_interface: ^6.5.4
+  uuid: ^3.0.6
+  email_validator: ^2.0.1
 
 
 

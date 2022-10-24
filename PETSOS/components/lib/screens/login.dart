@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,8 @@ class _Home2ScreenState extends State<Home2Screen> {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     return firebaseApp;
   }
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +44,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+  }
+
   static Future<User?> loginUsingEmailPassword(
       {required String email,
       required String password,
@@ -52,119 +66,157 @@ class _LoginScreenState extends State<LoginScreen> {
           email: email, password: password);
       user = userCredential.user;
     } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found") {
-        print("No existe un usuario con este Email");
-      }
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text(
+                'PET-SOS',
+                textAlign: TextAlign.center,
+              ),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: const [
+                    Text('Datos invalidos', textAlign: TextAlign.center)
+                  ],
+                ),
+              ),
+            );
+          });
     }
     return user;
   }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "PET-SOS",
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 28.0,
-                fontWeight: FontWeight.bold),
-          ),
-          const Text(
-            "Iniciar sesion",
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 33.0,
-                fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(
-            height: 25.0,
-          ),
-          TextField(
-            controller: _emailController,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-                hintText: "Ingresa tu Email",
-                prefixIcon: Icon(Icons.mail, color: Colors.black)),
-          ),
-          const SizedBox(
-            height: 26.0,
-          ),
-          TextField(
-            controller: _passwordController,
-            keyboardType: TextInputType.emailAddress,
-            obscureText: true,
-            decoration: const InputDecoration(
-                hintText: "Ingresa tu Contraseña",
-                prefixIcon: Icon(Icons.lock, color: Colors.black)),
-          ),
-          const SizedBox(
-            height: 12.0,
-          ),
-          TextButton(
-            child: const Text(
-              "Olvidaste tu contraseña?",
-              style: TextStyle(
-                color: Color.fromARGB(255, 201, 40, 12),
+      child: SingleChildScrollView(
+        child: Form(
+          autovalidateMode: AutovalidateMode
+              .onUserInteraction, //necesario para realizar la validacion de campos
+          key: formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 100.0,
               ),
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, 'pass');
-            },
-          ),
-          const SizedBox(
-            height: 20.0,
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: RawMaterialButton(
-                fillColor: Color.fromARGB(255, 201, 40, 12),
-                elevation: 0.0,
-                padding: const EdgeInsets.symmetric(vertical: 15.0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                onPressed: () async {
-                  User? user = await loginUsingEmailPassword(
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                      context: context);
-                  print(user);
-                  if (user != null) {
-                    // ignore: use_build_context_synchronously
-                    Navigator.pushNamed(context, 'home');
+              const Text(
+                "PET-SOS",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              const Text(
+                "Iniciar sesion",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 33.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 25.0,
+              ),
+              TextFormField(
+                validator: (email) =>
+                    email != null && !EmailValidator.validate(email)
+                        ? 'Introduzca un email válido'
+                        : null,
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                    hintText: "Ingresa tu Email",
+                    prefixIcon: Icon(Icons.mail, color: Colors.black)),
+              ),
+              const SizedBox(
+                height: 26.0,
+              ),
+              TextFormField(
+                validator: (value) {
+                  if (value != null && value.length < 6) {
+                    return 'Demasiado corto';
+                  } else if (value != null && value.length > 70) {
+                    return 'Demasiado largo';
+                  } else {
+                    return null;
                   }
                 },
+                controller: _passwordController,
+                keyboardType: TextInputType.emailAddress,
+                obscureText: true,
+                decoration: const InputDecoration(
+                    hintText: "Ingresa tu Contraseña",
+                    prefixIcon: Icon(Icons.lock, color: Colors.black)),
+              ),
+              const SizedBox(
+                height: 12.0,
+              ),
+              TextButton(
                 child: const Text(
-                  "Iniciar Sesion",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                )),
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: RawMaterialButton(
-                fillColor: Color.fromARGB(255, 201, 40, 12),
-                elevation: 0.0,
-                padding: const EdgeInsets.symmetric(vertical: 15.0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
+                  "Olvidaste tu contraseña?",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 201, 40, 12),
+                  ),
+                ),
                 onPressed: () {
-                  Navigator.pushNamed(context, 'register');
+                  Navigator.pushNamed(context, 'pass');
                 },
-                child: const Text(
-                  "Registrarse",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                )),
-          )
-        ],
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: RawMaterialButton(
+                    fillColor: const Color.fromARGB(255, 201, 40, 12),
+                    elevation: 0.0,
+                    padding: const EdgeInsets.symmetric(vertical: 15.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                    onPressed: () async {
+                      final isValidForm = formKey.currentState!.validate();
+
+                      if (isValidForm) {
+                        User? user = await loginUsingEmailPassword(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            context: context);
+                        if (user != null) {
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushNamed(context, 'home');
+                        }
+                      }
+                    },
+                    child: const Text(
+                      "Iniciar Sesion",
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    )),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: RawMaterialButton(
+                    fillColor: const Color.fromARGB(255, 201, 40, 12),
+                    elevation: 0.0,
+                    padding: const EdgeInsets.symmetric(vertical: 15.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'register');
+                    },
+                    child: const Text(
+                      "Registrarse",
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    )),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
