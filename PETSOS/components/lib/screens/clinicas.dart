@@ -60,7 +60,7 @@ class ClinicasScreen extends StatelessWidget {
                 ),
                 style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(30),
-                    primary: const Color.fromARGB(255, 135, 6, 6)),
+                    backgroundColor: const Color.fromARGB(255, 135, 6, 6)),
               ),
               const SizedBox(
                 height: 30,

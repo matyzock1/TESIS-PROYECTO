@@ -130,7 +130,7 @@ class _FormularioScreenState extends State<FormularioScreen> {
         iconTheme: const IconThemeData(
           color: Color.fromARGB(255, 255, 255, 255), //change your color here
         ),
-        backgroundColor: Color.fromARGB(255, 135, 6, 6),
+        backgroundColor: const Color.fromARGB(255, 135, 6, 6),
       ),
       body: Container(
         decoration: const BoxDecoration(
