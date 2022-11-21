@@ -35,7 +35,7 @@ class ClinicasScreen extends StatelessWidget {
             children: [
               Lottie.network(
                 'https://lottie.host/b9a125a3-c930-4353-b937-62580eff76e3/WJEJmwVl3Z.json',
-                width: 250,
+                width: 230,
                 height: 250,
               ),
               const SizedBox(
