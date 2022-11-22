@@ -30,8 +30,7 @@ class _Splash2ScreenState extends State<Splash2Screen> {
             SizedBox(
               height: 300,
               width: 300,
-              child: Lottie.network(
-                  "https://lottie.host/6dc5e1a3-277d-40be-ae8b-65e5352449b6/p2MUcjZFSw.json"),
+              child: Lottie.asset('assets/carga.json'),
             ),
             const SizedBox(height: 20),
           ],

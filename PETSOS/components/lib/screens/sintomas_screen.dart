@@ -87,8 +87,8 @@ class _SintomasScreenState extends State<SintomasScreen> {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
               ),
-              Lottie.network(
-                'https://assets4.lottiefiles.com/packages/lf20_C31OHO.json',
+              Lottie.asset(
+                'assets/sintomas.json',
                 width: 220,
                 height: 220,
               ),

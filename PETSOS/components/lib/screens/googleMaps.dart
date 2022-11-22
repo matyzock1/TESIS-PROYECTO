@@ -28,7 +28,7 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
         markerId: MarkerId('1'),
         position: LatLng(20.42796133580664, 75.885749655962),
         infoWindow: InfoWindow(
-          title: 'My Position',
+          title: 'Mi posición',
         )),
   ];
 

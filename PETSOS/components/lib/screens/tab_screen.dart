@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({Key? key}) : super(key: key);
@@ -71,15 +73,15 @@ class _TabScreenState extends State<TabScreen> {
       body: Column(
         children: [
           const SizedBox(
-            height: 30,
+            height: 15,
           ),
-          Lottie.network(
-            'https://lottie.host/983f7e2e-074d-4dae-9002-b37a9d34892b/cKUkzO90yt.json',
-            width: 130,
-            height: 130,
+          Lottie.asset(
+            'assets/luna.json',
+            width: 180,
+            height: 180,
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           FutureBuilder<DocumentSnapshot>(
             future: userName.get(),
@@ -96,10 +98,12 @@ class _TabScreenState extends State<TabScreen> {
               if (snapshot.connectionState == ConnectionState.done) {
                 Map<String, dynamic> data =
                     snapshot.data!.data() as Map<String, dynamic>;
-                return Text(
-                  "Bienvenido: ${data['username']}",
-                  style: const TextStyle(
-                      fontSize: 30, fontWeight: FontWeight.bold),
+                return Center(
+                  child: Text(
+                    "Bienvenido: ${data['username']}",
+                    style: const TextStyle(
+                        fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
                 );
               }
 
@@ -107,7 +111,7 @@ class _TabScreenState extends State<TabScreen> {
             },
           ),
           const SizedBox(
-            height: 30,
+            height: 50,
           ),
           Center(
             child: ElevatedButton.icon(
@@ -169,8 +173,44 @@ class _TabScreenState extends State<TabScreen> {
                   shape: const StadiumBorder()),
             ),
           ),
+          const SizedBox(
+            height: 90,
+          ),
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            color: const Color.fromARGB(255, 135, 6, 6),
+            alignment: Alignment.center,
+            child: ElevatedButton(
+                child: const Text(
+                  'Siguenos en Instagram!',
+                  style: TextStyle(color: Colors.black),
+                ),
+                style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(15),
+                    primary: const Color.fromARGB(255, 255, 255, 255)),
+                onPressed: () {
+                  launch('https://www.instagram.com/_petsosapp');
+                }),
+          )
         ],
       ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   // ignore: prefer_const_literals_to_create_immutables
+      //   items: [
+      //     const BottomNavigationBarItem(
+      //       icon: Icon(Icons.thumb_up),
+      //       label: "Like",
+      //     ),
+      //     const BottomNavigationBarItem(
+      //       icon: Icon(Icons.thumb_down),
+      //       label: "Dislike",
+      //     ),
+      //     const BottomNavigationBarItem(
+      //       icon: Icon(Icons.comment),
+      //       label: "Comment",
+      //     )
+      //   ],
+      // ),
     );
   }
 }

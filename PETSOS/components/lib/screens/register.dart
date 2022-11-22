@@ -140,6 +140,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: _passwordController,
                 keyboardType: TextInputType.emailAddress,
                 obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
                 decoration: const InputDecoration(
                     hintText: "Ingresa tu Contraseña",
                     prefixIcon: Icon(Icons.lock, color: Colors.black)),

@@ -33,8 +33,8 @@ class ClinicasScreen extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Lottie.network(
-                'https://lottie.host/b9a125a3-c930-4353-b937-62580eff76e3/WJEJmwVl3Z.json',
+              Lottie.asset(
+                'assets/gps.json',
                 width: 250,
                 height: 250,
               ),
