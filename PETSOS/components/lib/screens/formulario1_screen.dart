@@ -130,7 +130,7 @@ class _FormularioScreenState extends State<FormularioScreen> {
         iconTheme: const IconThemeData(
           color: Color.fromARGB(255, 255, 255, 255), //change your color here
         ),
-        backgroundColor: Color.fromARGB(255, 135, 6, 6),
+        backgroundColor: const Color.fromARGB(255, 135, 6, 6),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -143,13 +143,13 @@ class _FormularioScreenState extends State<FormularioScreen> {
             const SizedBox(
               height: 10,
             ),
-            Lottie.network(
-              'https://assets4.lottiefiles.com/packages/lf20_o1JRaPxx1E.json',
+            Lottie.asset(
+              'assets/carac.json',
               width: 200,
               height: 200,
             ),
             const SizedBox(
-              height: 10,
+              height: 30,
             ),
             const Text(
               'Elige una Raza',

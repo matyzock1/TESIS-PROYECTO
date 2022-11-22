@@ -28,7 +28,7 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
         markerId: MarkerId('1'),
         position: LatLng(20.42796133580664, 75.885749655962),
         infoWindow: InfoWindow(
-          title: 'My Position',
+          title: 'Mi posición',
         )),
   ];
 
@@ -101,7 +101,7 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
             FlutterPhoneDirectCaller.callNumber('+56966290537');
           }),
       icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(-33.36884358856657, -70.68064928112524),
+      position: const LatLng(-33.36884358856657, -70.68064928112524),
     );
 
     Marker _kGooglePlexMarker6 = Marker(
