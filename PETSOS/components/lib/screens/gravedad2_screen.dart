@@ -111,9 +111,9 @@ class _Gravedad2ScreenState extends State<Gravedad2Screen> {
   }
 
   Future createHistorial() async {
-    var now = DateTime.now();
-    var formatter = DateFormat('yyyy-MM-dd');
-    String formattedDate = formatter.format(now);
+    // var now = DateTime.now();
+    // var formatter = DateFormat('yyyy-MM-dd');
+    // String formattedDate = formatter.format(now);
 
     final docHistorial = FirebaseFirestore.instance
         .collection('users')
@@ -127,7 +127,7 @@ class _Gravedad2ScreenState extends State<Gravedad2Screen> {
       'Edad': datos[1],
       'Peso': datos[2],
       'Sintomas': [datos[3], datos[4], datos[5]],
-      'Fecha': formattedDate
+      'Fecha': DateTime.now()
     };
 
     await docHistorial.set(json);

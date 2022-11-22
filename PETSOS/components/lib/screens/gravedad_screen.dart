@@ -38,7 +38,7 @@ class _GravedadScreenState extends State<GravedadScreen> {
 
   //Generar cadena aleatoria
 
-  generarCadena(){
+  generarCadena() {
     var cadena = "";
     var longitud = 10;
     var caracteres = "abcdefghijklmnopqrstuvwxyz0123456789";
