@@ -57,9 +57,9 @@ class _GravedadScreenState extends State<GravedadScreen> {
         .doc(datos[1])
         .collection('Enfermedad');
 
-    String sintoma1 = "sintomas" + '.' + datos[3];
-    String sintoma2 = "sintomas" + '.' + datos[4];
-    String sintoma3 = "sintomas" + '.' + datos[5];
+    String sintoma1 = "sintomas" '.' + datos[3];
+    String sintoma2 = "sintomas" '.' + datos[4];
+    String sintoma3 = "sintomas" '.' + datos[5];
 
     QuerySnapshot _consulta = await consulta
         .where(sintoma1, isEqualTo: true)
@@ -160,13 +160,13 @@ class _GravedadScreenState extends State<GravedadScreen> {
             icon: const Icon(Icons.arrow_back),
           ),
           title: const Text(
-            'PET-SOS PERRO',
+            'PET-SOS GRAVEDAD',
             style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
           ),
           iconTheme: const IconThemeData(
             color: Color.fromARGB(255, 255, 255, 255), //change your color here
           ),
-          backgroundColor: Color.fromARGB(255, 135, 6, 6),
+          backgroundColor: const Color.fromARGB(255, 135, 6, 6),
         ),
         body: Center(
           child: Column(
@@ -205,7 +205,7 @@ class _GravedadScreenState extends State<GravedadScreen> {
                   ),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(15),
-                    primary: const Color.fromARGB(255, 251, 244, 21),
+                    backgroundColor: const Color.fromARGB(255, 251, 244, 21),
                   )),
               const SizedBox(
                 height: 20,
@@ -221,7 +221,7 @@ class _GravedadScreenState extends State<GravedadScreen> {
                 ),
                 style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(15),
-                    primary: const Color.fromARGB(255, 255, 255, 255)),
+                    backgroundColor: const Color.fromARGB(255, 255, 255, 255)),
               ),
             ],
           ),

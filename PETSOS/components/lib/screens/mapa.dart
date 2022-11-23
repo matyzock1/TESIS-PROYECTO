@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 135, 6, 6),
+        backgroundColor: const Color.fromARGB(255, 135, 6, 6),
         // on below line we have given title of app
         title: const Text(
           "PET-SOS",
@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
               markerId: const MarkerId("2"),
               position: LatLng(value.latitude, value.longitude),
               infoWindow: const InfoWindow(
-                title: 'My Current Location',
+                title: 'Mi ubicación',
               ),
             ));
 

@@ -5,7 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+
+import 'login.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({Key? key}) : super(key: key);
@@ -30,6 +31,13 @@ class _TabScreenState extends State<TabScreen> {
     Navigator.of(context).pop();
   }
 
+  Future logout() async {
+    await _firebaseAuth.signOut().then((value) => Navigator.of(context)
+        .pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const Home2Screen()),
+            (route) => false));
+  }
+
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
@@ -44,20 +52,15 @@ class _TabScreenState extends State<TabScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(Icons.arrow_back),
-        ),
         title: const Text(
           'PET-SOS',
           style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
         ),
+        automaticallyImplyLeading: false,
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              _signOut();
+              logout();
             },
             child: const Text(
               "Cerrar sesión",
@@ -77,8 +80,8 @@ class _TabScreenState extends State<TabScreen> {
           ),
           Lottie.asset(
             'assets/luna.json',
-            width: 180,
-            height: 180,
+            width: 160,
+            height: 160,
           ),
           const SizedBox(
             height: 10,
@@ -100,7 +103,7 @@ class _TabScreenState extends State<TabScreen> {
                     snapshot.data!.data() as Map<String, dynamic>;
                 return Center(
                   child: Text(
-                    "Bienvenido: ${data['username']}",
+                    "Bienvenido/a: ${data['username']}",
                     style: const TextStyle(
                         fontSize: 30, fontWeight: FontWeight.bold),
                   ),
@@ -174,7 +177,7 @@ class _TabScreenState extends State<TabScreen> {
             ),
           ),
           const SizedBox(
-            height: 90,
+            height: 65,
           ),
           Container(
             padding: const EdgeInsets.all(8.0),
@@ -194,23 +197,6 @@ class _TabScreenState extends State<TabScreen> {
           )
         ],
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   // ignore: prefer_const_literals_to_create_immutables
-      //   items: [
-      //     const BottomNavigationBarItem(
-      //       icon: Icon(Icons.thumb_up),
-      //       label: "Like",
-      //     ),
-      //     const BottomNavigationBarItem(
-      //       icon: Icon(Icons.thumb_down),
-      //       label: "Dislike",
-      //     ),
-      //     const BottomNavigationBarItem(
-      //       icon: Icon(Icons.comment),
-      //       label: "Comment",
-      //     )
-      //   ],
-      // ),
     );
   }
 }
