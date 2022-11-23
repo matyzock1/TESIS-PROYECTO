@@ -102,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
             // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(
-                height: 40.0,
+                height: 100.0,
               ),
               const Text(
                 "PET-SOS",
@@ -193,12 +193,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (user != null) {
                           // ignore: use_build_context_synchronously
                           user = FirebaseAuth.instance.currentUser!;
-                          Navigator.pushNamed(context, 'splash4');
+                          Navigator.pushReplacementNamed(context, 'splash4');
                         }
                       }
                     },
                     child: const Text(
-                      "Iniciar Sesion",
+                      "Iniciar Sesión",
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     )),
               ),

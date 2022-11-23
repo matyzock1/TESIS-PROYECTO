@@ -6,81 +6,84 @@ class ClinicasScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(Icons.arrow_back),
+    return WillPopScope(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.arrow_back),
+          ),
+          title: const Text(
+            'PET-SOS CLÍNICAS',
+            style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          ),
+          iconTheme: const IconThemeData(
+            color: Colors.white, //change your color here
+          ),
+          backgroundColor: const Color.fromARGB(255, 135, 6, 6),
         ),
-        title: const Text(
-          'PET-SOS SINTOMAS',
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
-        ),
-        iconTheme: const IconThemeData(
-          color: Colors.white, //change your color here
-        ),
-        backgroundColor: const Color.fromARGB(255, 135, 6, 6),
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                    'https://wonderfulengineering.com/wp-content/uploads/2016/02/white-wallpaper-21-768x480.jpg'))),
-        child: Center(
-          child: Column(
-            children: [
-              Lottie.asset(
-                'assets/gps.json',
-                width: 250,
-                height: 250,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                'Selecciona el tipo de Atención',
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'mapa');
-                },
-                child: const Text(
-                  "  CLÍNICAS 24 HORAS  ",
-                  style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+        body: Container(
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover, image: AssetImage('assets/fondo.jpg'))),
+          child: Center(
+            child: Column(
+              children: [
+                Lottie.asset(
+                  'assets/gps.json',
+                  width: 250,
+                  height: 250,
                 ),
-                style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(30),
-                    backgroundColor: const Color.fromARGB(255, 135, 6, 6)),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'googlemaps');
-                },
-                child: const Text(
-                  "CLINICAS HR NORMAL",
-                  style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                const SizedBox(
+                  height: 20,
                 ),
-                style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(30),
-                    primary: Color.fromARGB(255, 179, 91, 36)),
-              ),
-            ],
+                const Text(
+                  'Selecciona el tipo de Atención:',
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'mapa');
+                  },
+                  child: const Text(
+                    "  CLÍNICAS 24 HORAS  ",
+                    style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(30),
+                      backgroundColor: const Color.fromARGB(255, 135, 6, 6)),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'googlemaps');
+                  },
+                  child: const Text(
+                    "CLÍNICAS HR NORMAL",
+                    style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(30),
+                      backgroundColor: const Color.fromARGB(255, 179, 91, 36)),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+      onWillPop: () async {
+        return false;
+      },
     );
   }
 }

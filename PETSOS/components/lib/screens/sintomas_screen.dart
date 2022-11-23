@@ -62,20 +62,18 @@ class _SintomasScreenState extends State<SintomasScreen> {
             icon: const Icon(Icons.arrow_back),
           ),
           title: const Text(
-            'PET-SOS SINTOMAS',
+            'PET-SOS SÍNTOMAS',
             style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
           ),
           iconTheme: const IconThemeData(
             color: Colors.white, //change your color here
           ),
-          backgroundColor: Color.fromARGB(255, 135, 6, 6),
+          backgroundColor: const Color.fromARGB(255, 135, 6, 6),
         ),
         body: Container(
           decoration: const BoxDecoration(
               image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                      'https://wonderfulengineering.com/wp-content/uploads/2016/02/white-wallpaper-21-768x480.jpg'))),
+                  fit: BoxFit.cover, image: AssetImage('assets/fondo.jpg'))),
           child: Center(
             child: Column(children: [
               const SizedBox(
@@ -365,9 +363,9 @@ class _SintomasScreenState extends State<SintomasScreen> {
                             .doc(a[1])
                             .collection('Enfermedad');
 
-                        String sintoma1 = "sintomas" + '.' + a[3];
-                        String sintoma2 = "sintomas" + '.' + a[4];
-                        String sintoma3 = "sintomas" + '.' + a[5];
+                        String sintoma1 = "sintomas" '.' + a[3];
+                        String sintoma2 = "sintomas" '.' + a[4];
+                        String sintoma3 = "sintomas" '.' + a[5];
 
                         QuerySnapshot _consulta = await consulta
                             .where(sintoma1, isEqualTo: true)
@@ -392,7 +390,7 @@ class _SintomasScreenState extends State<SintomasScreen> {
                     },
                     child: const Text("CONSULTAR ESTADO"),
                     style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(255, 31, 163, 59),
+                      backgroundColor: const Color.fromARGB(255, 31, 163, 59),
                     ))
               else
                 ElevatedButton(
@@ -414,7 +412,7 @@ class _SintomasScreenState extends State<SintomasScreen> {
                     },
                     child: const Text('CONSULTAR ESTADO'),
                     style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(255, 135, 6, 6),
+                      backgroundColor: const Color.fromARGB(255, 135, 6, 6),
                     ))
             ]),
           ),
