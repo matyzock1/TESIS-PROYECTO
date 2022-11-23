@@ -1,15 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:geocode/geocode.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-Completer<GoogleMapController> _controller = Completer();
-
 class GoogleMapsScreen extends StatefulWidget {
-  GoogleMapsScreen({Key? key}) : super(key: key);
+  const GoogleMapsScreen({Key? key}) : super(key: key);
 
   @override
   State<GoogleMapsScreen> createState() => _GoogleMapsScreenState();
@@ -65,7 +61,7 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
             FlutterPhoneDirectCaller.callNumber('+56232292114');
           }),
       icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(-33.3533768456075, -70.67655780885231),
+      position: const LatLng(-33.3533768456075, -70.67655780885231),
     );
 
     Marker _kGooglePlexMarker3 = Marker(
@@ -77,7 +73,7 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
             FlutterPhoneDirectCaller.callNumber('+56227211534');
           }),
       icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(-33.3533768456075, -70.67655780885231),
+      position: const LatLng(-33.3533768456075, -70.67655780885231),
     );
 
     Marker _kGooglePlexMarker4 = Marker(
@@ -89,7 +85,7 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
             FlutterPhoneDirectCaller.callNumber('+56232092949');
           }),
       icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(-33.354954099084964, -70.67157962938873),
+      position: const LatLng(-33.354954099084964, -70.67157962938873),
     );
 
     Marker _kGooglePlexMarker5 = Marker(
@@ -113,12 +109,12 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
             FlutterPhoneDirectCaller.callNumber('+56226231478');
           }),
       icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(-33.37178247013363, -70.6743836405556),
+      position: const LatLng(-33.37178247013363, -70.6743836405556),
     );
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 135, 6, 6),
+        backgroundColor: const Color.fromARGB(255, 135, 6, 6),
         // on below line we have given title of app
         title: const Text(
           "PET-SOS",

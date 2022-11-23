@@ -1,4 +1,3 @@
-import 'package:components/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -13,7 +12,7 @@ class _Splash4ScreenState extends State<Splash4Screen> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushNamed(context, 'tab');
+      Navigator.pushReplacementNamed(context, 'tab');
     });
     super.initState();
   }

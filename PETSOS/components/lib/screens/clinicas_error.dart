@@ -58,7 +58,7 @@ class _ClinicasErrorScreenState extends State<ClinicasErrorScreen> {
           icon: const Icon(Icons.arrow_back),
         ),
         title: const Text(
-          'PET-SOS SINTOMAS',
+          'PET-SOS CLÍNICAS',
           style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
         ),
         iconTheme: const IconThemeData(
@@ -69,14 +69,12 @@ class _ClinicasErrorScreenState extends State<ClinicasErrorScreen> {
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                    'https://wonderfulengineering.com/wp-content/uploads/2016/02/white-wallpaper-21-768x480.jpg'))),
+                fit: BoxFit.cover, image: AssetImage('assets/fondo.jpg'))),
         child: Center(
           child: Column(
             children: [
-              Lottie.network(
-                'https://lottie.host/b9a125a3-c930-4353-b937-62580eff76e3/WJEJmwVl3Z.json',
+              Lottie.asset(
+                'assets/gps.json',
                 width: 250,
                 height: 250,
               ),
@@ -84,7 +82,7 @@ class _ClinicasErrorScreenState extends State<ClinicasErrorScreen> {
                 height: 20,
               ),
               const Text(
-                'Selecciona el tipo de Atención',
+                'Selecciona el tipo de Atención:',
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
@@ -112,12 +110,12 @@ class _ClinicasErrorScreenState extends State<ClinicasErrorScreen> {
                   Navigator.pushNamed(context, 'googlemaps');
                 },
                 child: const Text(
-                  "CLINICAS HR NORMAL",
+                  "CLÍNICAS HR NORMAL",
                   style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
                 ),
                 style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(30),
-                    primary: const Color.fromARGB(255, 179, 91, 36)),
+                    backgroundColor: const Color.fromARGB(255, 179, 91, 36)),
               ),
             ],
           ),

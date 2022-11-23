@@ -21,7 +21,6 @@ class AppRoutes {
   static const initialRoute = 'splash';
 
   static Map<String, Widget Function(BuildContext)> routes = {
-    'home': (BuildContext context) => const HomeScreen(),
     'gravedad': (BuildContext context) => const GravedadScreen(
           datos: [],
         ),
@@ -29,7 +28,6 @@ class AppRoutes {
           datos: [],
         ),
     'formulario1': (BuildContext context) => const FormularioScreen(),
-    'formulario2': (BuildContext context) => const Formulario2Screen(),
     'sintomas1': (BuildContext context) => const SintomasScreen(
           a: [],
         ),

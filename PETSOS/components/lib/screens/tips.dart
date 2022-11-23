@@ -20,7 +20,7 @@ class TipsScreen extends StatelessWidget {
           iconTheme: const IconThemeData(
             color: Colors.white, //change your color here
           ),
-          backgroundColor: Color.fromARGB(255, 135, 6, 6),
+          backgroundColor: const Color.fromARGB(255, 135, 6, 6),
         ),
         body: Container(
           decoration: const BoxDecoration(
@@ -73,21 +73,6 @@ class TipsScreen extends StatelessWidget {
                 const SizedBox(
                   height: 50,
                 ),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     Navigator.of(context).pop();
-                //     Navigator.of(context).pop();
-                //     Navigator.of(context).pop();
-                //     Navigator.of(context).pop();
-                //   },
-                //   child: const Text(
-                //     "Finalizar",
-                //     style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
-                //   ),
-                //   style: ElevatedButton.styleFrom(
-                //       padding: const EdgeInsets.all(15),
-                //       primary: Color.fromARGB(255, 135, 6, 6)),
-                // ),
               ],
             ),
           ),

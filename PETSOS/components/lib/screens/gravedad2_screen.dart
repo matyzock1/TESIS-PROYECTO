@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:components/screens/tips.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'alert_screen.dart';
 
@@ -155,7 +154,7 @@ class _Gravedad2ScreenState extends State<Gravedad2Screen> {
             icon: const Icon(Icons.arrow_back),
           ),
           title: const Text(
-            'PET-SOS PERRO',
+            'PET-SOS GRAVEDAD',
             style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
           ),
           iconTheme: const IconThemeData(
