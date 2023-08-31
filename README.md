@@ -43,5 +43,3 @@ Si deseas contribuir a PetHealth Predictor, sigue estos pasos:
 Este proyecto está bajo la Licencia XYZ. Consulta el archivo [LICENSE](LICENSE) para obtener más información.
 
 ---
-
-¡Esperamos que encuentres útil y valiosa esta aplicación para cuidar la salud de tus mascotas! Si tienes alguna pregunta o sugerencia, no dudes en contactarnos a través de [correo electrónico](mailto:contacto@pethealthpredictor.com) o [sitio web](https://www.pethealthpredictor.com). ¡Gracias por utilizar PetHealth Predictor!
